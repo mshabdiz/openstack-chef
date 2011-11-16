@@ -27,8 +27,8 @@ default[:nova][:creds][:group] = "root"
 default[:nova][:creds][:dir] = "/root"
 default[:nova][:my_ip] = ipaddress
 default[:nova][:iscsi_ip_prefix] = ipaddress.split('.')[0..2].join('.')
-default[:nova][:public_interface] = "eth1"
-default[:nova][:vlan_interface] = "eth1"
+default[:nova][:public_interface] = "eth0"
+default[:nova][:vlan_interface] = "eth0"
 default[:nova][:mysql] = true
 default[:nova][:postgresql] = false
 default[:nova][:images] = []
@@ -51,7 +51,7 @@ default[:nova][:state_path] = "/var/lib/nova"
 default[:nova][:verbose] = true
 
 #auth type
-default[:nova][:auth_type] = "noauth"
+default[:nova][:auth_type] = "keysone"
 
 #keystone settings
 default[:nova][:keystone_service_protocol] = "http"

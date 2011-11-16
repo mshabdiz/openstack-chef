@@ -19,22 +19,10 @@ use = egg:Paste#urlmap
 /1.0: ec2metadata
 
 [pipeline:ec2cloud]
-<% if node[:nova][:auth_type] == "noauth" %>
-pipeline = logrequest ec2noauth cloudrequest authorizer ec2executor
-<% elsif node[:nova][:auth_type] == "deprecated" %>
-pipeline = logrequest authenticate cloudrequest authorizer ec2executor
-<% elsif node[:nova][:auth_type] == "keystone" %>
 pipeline = logrequest totoken authtoken keystonecontext cloudrequest authorizer ec2executor
-<% end %>
 
 [pipeline:ec2admin]
-<% if node[:nova][:auth_type] == "noauth" %>
-pipeline = logrequest ec2noauth adminrequest authorizer ec2executor
-<% elsif node[:nova][:auth_type] == "deprecated" %>
-pipeline = logrequest authenticate adminrequest authorizer ec2executor
-<% elsif node[:nova][:auth_type] == "keystone" %>
 pipeline = logrequest totoken authtoken keystonecontext adminrequest authorizer ec2executor
-<% end %>
 
 [pipeline:ec2metadata]
 pipeline = logrequest ec2md
@@ -84,16 +72,14 @@ paste.app_factory = nova.api.ec2.metadatarequesthandler:MetadataRequestHandler.f
 [composite:osapi]
 use = egg:Paste#urlmap
 /: osversions
+/v1.0: openstackapi10
 /v1.1: openstackapi11
 
+[pipeline:openstackapi10]
+pipeline = faultwrap authtoken keystonecontext ratelimit osapiapp10
+
 [pipeline:openstackapi11]
-<% if node[:nova][:auth_type] == "noauth" %>
-pipeline = faultwrap noauth ratelimit serialize extensions osapiapp11
-<% elsif node[:nova][:auth_type] == "deprecated" %>
-pipeline = faultwrap auth ratelimit serialize extensions osapiapp11
-<% elsif node[:nova][:auth_type] == "keystone" %>
-pipeline = faultwrap authtoken keystonecontext ratelimit serialize extensions osapiapp11
-<% end %>
+pipeline = faultwrap authtoken keystonecontext ratelimit extensions osapiapp11
 
 [filter:faultwrap]
 paste.filter_factory = nova.api.openstack:FaultWrapper.factory
@@ -107,20 +93,22 @@ paste.filter_factory = nova.api.openstack.auth:NoAuthMiddleware.factory
 [filter:ratelimit]
 paste.filter_factory = nova.api.openstack.limits:RateLimitingMiddleware.factory
 
-[filter:serialize]
-paste.filter_factory = nova.api.openstack.wsgi:LazySerializationMiddleware.factory
-
 [filter:extensions]
 paste.filter_factory = nova.api.openstack.extensions:ExtensionMiddleware.factory
 
+[app:osapiapp10]
+paste.app_factory = nova.api.openstack:APIRouterV10.factory
+
 [app:osapiapp11]
-paste.app_factory = nova.api.openstack:APIRouter.factory
+paste.app_factory = nova.api.openstack:APIRouterV11.factory
 
 [pipeline:osversions]
 pipeline = faultwrap osversionapp
 
 [app:osversionapp]
 paste.app_factory = nova.api.openstack.versions:Versions.factory
+
+
 
 ##########
 # Shared #
