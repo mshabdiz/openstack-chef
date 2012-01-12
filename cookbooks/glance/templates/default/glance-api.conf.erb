@@ -127,7 +127,7 @@ swift_store_large_object_chunk_size = <%= node[:glance][:swift_store_large_objec
 # To use ServiceNET for authentication, prefix hostname of
 # `swift_store_auth_address` with 'snet-'.
 # Ex. https://example.com/v1.0/ -> https://snet-example.com/v1.0/
-swift_enable_snet = <%= node[:glance][:swift_enable_snet] %> 
+swift_enable_snet = <%= node[:glance][:swift_enable_snet] %>
 
 # ============ S3 Store Options =============================
 
@@ -191,7 +191,7 @@ image_cache_dir = <%= node[:glance][:image_cache_dir] %>
 <% if node[:glance][:auth_type] == "noauth" %>
 pipeline = versionnegotiation context <%= @cache %> <%= @cachemanage %> apiv1app
 <% elsif node[:glance][:auth_type] == "keystone" %>
-pipeline = versionnegotiation authtoken auth-context <%= @cache %> <%= @cachemanage %> apiv1app
+pipeline = versionnegotiation authtoken auth-context apiv1app
 <% end %>
 
 [app:apiv1app]
@@ -199,12 +199,6 @@ paste.app_factory = glance.api.v1:app_factory
 
 [filter:versionnegotiation]
 paste.filter_factory = glance.api.middleware.version_negotiation:filter_factory
-
-[filter:cache]
-paste.filter_factory = glance.api.middleware.cache:filter_factory
-
-[filter:cachemanage]
-paste.filter_factory = glance.api.middleware.cache_manage:filter_factory
 
 [filter:context]
 paste.filter_factory = glance.common.context:filter_factory

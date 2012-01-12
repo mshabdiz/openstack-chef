@@ -4,6 +4,30 @@
 #
 #
 
+sql_connection = nil
+if node[:keystone][:mysql]
+  Chef::Log.info("Using mysql")
+  package "python-mysqldb"
+  mysqls = nil
+
+  unless Chef::Config[:solo]
+    mysqls = search(:node, "recipes:keystone\\:\\:mysql")
+  end
+  if mysqls and mysqls[0]
+    mysql = mysqls[0]
+    Chef::Log.info("Mysql server found at #{mysql[:mysql][:bind_address]}")
+  else
+    mysql = node
+    Chef::Log.info("Using local mysql at  #{mysql[:mysql][:bind_address]}")
+  end
+  sql_connection = "mysql://#{mysql[:keystone][:db][:user]}:#{mysql[:keystone][:db][:password]}@#{mysql[:mysql][:bind_address]}/#{mysql[:keystone][:db][:database]}"
+else
+  # default to sqlite
+  sql_connection = "sqlite:////var/lib/keystone/keystone.sqlite"
+end
+
+node[:keystone][:sql_connection] = sql_connection
+
 package "keystone" do
   options "--force-yes"
   action :install

@@ -22,6 +22,7 @@ add_flag(:dhcpbridge)
 add_flag(:logdir)
 add_flag(:state_path)
 add_flag(:my_ip)
+add_flag(:bridge_interface)
 add_flag(:public_interface)
 add_flag(:vlan_interface)
 add_flag(:iscsi_ip_prefix)
@@ -67,9 +68,10 @@ add_flag(:password_length)
 add_flag(:zone_name)
 add_flag(:zone_capabilities)
 add_flag(:root_helper)
+add_flag(:instance_path)
 add_flag(:notification_driver)
 add_boolean_flag(:allow_ec2_admin_api)
-
+add_flag(:allow_same_net_traffic)
 %>
 <% @flags.each do |flag| %>
 <%= flag %>

@@ -53,6 +53,23 @@ package "mysql-server" do
   action :install
 end
 
+execute "cp datadir" do
+  command "cp -pr /var/lib/mysql /opt/openstack/mysql;sudo chown -R mysql.mysql /opt/openstack/mysql"
+  action :run
+  not_if "ls /opt/openstack/mysql"
+end
+
+
+
+template "/etc/apparmor.d/usr.sbin.mysqld" do
+    source "usr.sbin.mysqld.erb"
+    owner "root"
+    group "root"
+    mode "0644"
+end
+
+execute "sudo /etc/init.d/apparmor reload"
+
 service "mysql" do
   service_name value_for_platform([ "centos", "redhat", "suse", "fedora" ] => {"default" => "mysqld"}, "default" => "mysql")
   if (platform?("ubuntu") && node.platform_version.to_f >= 10.04)
@@ -81,7 +98,7 @@ unless Chef::Config[:solo]
   end
 end
 
-# set the root password on platforms 
+# set the root password on platforms
 # that don't support pre-seeding
 unless %w{debian ubuntu}.include?(node[:platform])
   execute "assign-root-password" do

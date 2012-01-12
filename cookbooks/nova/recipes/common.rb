@@ -90,6 +90,9 @@ rabbit_settings = {
   :vhost => rabbit[:nova][:rabbit][:vhost]
 }
 
+execute "sudo cp -r /var/lib/nova /opt/openstack"
+execute "sudo chown -R nova.root /opt/openstack/nova/"
+
 template "/etc/nova/nova.conf" do
   source "nova.conf.erb"
   owner "root"

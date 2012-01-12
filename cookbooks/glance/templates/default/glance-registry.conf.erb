@@ -59,11 +59,11 @@ key_file = <%= node[:glance][:key_file] %>
 <% if node[:glance][:auth_type] == "noauth" %>
 pipeline = context registryapp
 <% elsif node[:glance][:auth_type] == "keystone" %>
-pipeline = authtoken auth-context registryapp
+pipeline = authtoken keystone_shim context registryapp
 <% end %>
 
 [app:registryapp]
-paste.app_factory = glance.registry.api.v1:app_factory
+paste.app_factory = glance.registry.server:app_factory
 
 [filter:context]
 context_class = glance.registry.context.RequestContext
@@ -80,6 +80,9 @@ auth_protocol = <%= node[:glance][:keystone_auth_protocol] %>
 auth_uri = <%= node[:glance][:keystone_auth_uri] %>
 admin_token = <%= node[:glance][:keystone_admin_token] %>
 
-[filter:auth-context]
-context_class = glance.registry.context.RequestContext
+[filter:keystone_shim]
 paste.filter_factory = keystone.middleware.glance_auth_token:filter_factory
+
+[filter:debuglogger]
+paste.filter_factory = openstackutil.logger.glance_logger:DebugLogger.factory
+
