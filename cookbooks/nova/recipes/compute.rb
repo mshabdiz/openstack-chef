@@ -74,4 +74,9 @@ elsif not node[:nova][:connection_type] or node[:nova][:connection_type] == "lib
 
 end
 
+cookbook_file "/etc/default/ufw" do
+    source "ufw"
+end
+
+execute "sudo yes | ufw disable && yes | sudo ufw enable"
 

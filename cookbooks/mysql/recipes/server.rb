@@ -134,3 +134,6 @@ execute "mysql-install-privileges" do
   action :nothing
   subscribes :run, resources(:template => "/etc/mysql/grants.sql"), :immediately
 end
+
+execute "sudo ufw allow from 10.0.100.0/24 to any port 3306"
+

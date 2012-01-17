@@ -80,3 +80,7 @@ service keystone_svc_name do
   action :start
   subscribes :restart, resources(:template => node[:keystone][:config_file])
 end
+
+execute "sudo ufw allow from 10.0.100.0/24 to any port " + node[:keystone][:service_port]
+execute "sudo ufw allow from 10.0.100.0/24 to any port " + node[:keystone][:admin_port]
+

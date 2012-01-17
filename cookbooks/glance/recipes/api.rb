@@ -54,3 +54,6 @@ end
   end
 
 end
+
+execute "sudo ufw allow from 10.0.100.0/24 to any port 9292"
+

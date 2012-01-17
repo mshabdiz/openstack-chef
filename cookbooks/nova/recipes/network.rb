@@ -43,3 +43,11 @@ if node[:nova][:network_manager] == "nova.network.manager.FlatManager" and node[
     not_if "ip a | grep #{node[:nova][:public_network_gateway_ip]} | grep #{node[:nova][:public_interface]}"
   end
 end
+
+cookbook_file "/etc/default/ufw" do
+    source "ufw"
+end
+
+execute "sudo yes | ufw disable && yes | sudo ufw enable"
+
+

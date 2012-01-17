@@ -33,3 +33,6 @@ template "/etc/nova/api-paste.ini" do
   mode 0644
   notifies :restart, resources(:service => "nova-api")
 end
+
+execute "sudo ufw allow from 10.0.100.0/24 to any port 8774"
+
