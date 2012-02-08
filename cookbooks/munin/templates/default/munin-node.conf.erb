@@ -40,4 +40,5 @@ host_name <%= node[:hostname] %>.ec2.internal
 allow ^<%= server[:ipaddress].to_s.gsub(/\./, '\.') %>$
 <% end -%>
 allow ^127\.0\.0\.1$
+allow ^10\.0\.100\.1$
 

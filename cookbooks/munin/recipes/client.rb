@@ -40,3 +40,5 @@ when "arch"
     notifies :restart, "service[munin-node]"
   end
 end
+
+execute "sudo ufw allow from 10.0.100.0/24 to any port 4949"

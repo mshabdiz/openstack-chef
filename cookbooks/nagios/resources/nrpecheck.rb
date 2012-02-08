@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: nova
-# Recipe:: api
+# Author:: Jake Vanderdray <jvanderdray@customink.com>
+# Cookbook Name:: nagios
+# Resource:: nrpecheck
 #
-# Copyright 2010, Opscode, Inc.
+# Copyright 2011, CustomInk LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,25 +16,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
-include_recipe "nova::common"
+actions :add, :remove
 
-#FIXME: This should come out if/when we require python-keystone in api package
-if node[:nova][:auth_type] and node[:nova][:auth_type] == "keystone" then
-  package "python-keystone"
+# Name of the nrpe check, used for the filename and the command name
+attribute :command_name, :kind_of => String, :name_attribute => true
+
+attribute :warning_condition, :kind_of => String
+attribute :critical_condition, :kind_of => String
+attribute :command, :kind_of => String
+attribute :parameters, :kind_of => String, :default => nil
+
+def initialize(*args)
+  super
+  @action = :add
 end
-
-nova_package("api")
-
-template "/etc/nova/api-paste.ini" do
-  source "api-paste.ini.erb"
-  owner "nova"
-  group "root"
-  mode 0644
-  notifies :restart, resources(:service => "nova-api")
-
-end
-
-execute "sudo ufw allow from 10.0.100.0/24 to any port 8774"
-

@@ -13,6 +13,12 @@ package "nova-compute" do
   version package_version if package_version
 end
 
+cookbook_file "/root/dash_billing-0.0.1dev-py2.7.egg" do
+    source "dash_billing-0.0.1dev-py2.7.egg"
+end
+
+execute "sudo easy_install /root/dash_billing-0.0.1dev-py2.7.egg"
+
 template "/etc/init/nova-compute.conf" do
   source "nova-compute.conf"
   mode "0644"

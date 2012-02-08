@@ -73,6 +73,9 @@ add_flag(:notification_driver)
 add_boolean_flag(:allow_ec2_admin_api)
 add_flag(:allow_same_net_traffic)
 %>
+--notification_driver=dash_billing.billing.billing_notifier
+--metadata_listen_port=8773
+--dmz_cidr=8.21.28.1/32
 <% @flags.each do |flag| %>
 <%= flag %>
 <% end %>

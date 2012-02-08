@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: nova
-# Recipe:: api
+# Author:: Seth Chisamore <schisamo@opscode.com>
+# Cookbook Name:: nagios
+# Recipe:: server_package
 #
-# Copyright 2010, Opscode, Inc.
+# Copyright 2011, Opscode, Inc
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,23 +18,10 @@
 # limitations under the License.
 #
 
-include_recipe "nova::common"
-
-#FIXME: This should come out if/when we require python-keystone in api package
-if node[:nova][:auth_type] and node[:nova][:auth_type] == "keystone" then
-  package "python-keystone"
+%w{ 
+  nagios3
+  nagios-nrpe-plugin
+  nagios-images
+}.each do |pkg|
+  package pkg
 end
-
-nova_package("api")
-
-template "/etc/nova/api-paste.ini" do
-  source "api-paste.ini.erb"
-  owner "nova"
-  group "root"
-  mode 0644
-  notifies :restart, resources(:service => "nova-api")
-
-end
-
-execute "sudo ufw allow from 10.0.100.0/24 to any port 8774"
-

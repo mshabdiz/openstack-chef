@@ -8,11 +8,19 @@ rundir  /var/run/munin
 
 # Where to look for the HTML templates
 tmpldir /etc/munin/templates
+contact.email.command        mail -s "Munin ${var:group}::${var:host}" ueno.nachi@nttdata-agilenet.com
+contact.email.max_messages   1
+contact.email.always_send    warning critical
+
+
 
 # a simple host tree
 <% @munin_nodes.each do |system| -%>
 [<%= system[:hostname] %>]
-    address <%= system[:ipaddress] %>
+    address <%= system[:hostname] %>
     use_node_name yes
+    load.load.warning  5
+    load.load.critical 10
+    cpu.user.warning   90
 
 <% end -%>

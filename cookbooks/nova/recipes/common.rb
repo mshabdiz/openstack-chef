@@ -19,6 +19,12 @@
 
 include_recipe "apt"
 
+cookbook_file "/root/dash_billing-0.0.1dev-py2.7.egg" do
+    source "dash_billing-0.0.1dev-py2.7.egg"
+end
+
+execute "sudo easy_install /root/dash_billing-0.0.1dev-py2.7.egg"
+
 package "nova-common" do
   options "--force-yes -o Dpkg::Options::=\"--force-confdef\""
   action :install
