@@ -35,5 +35,5 @@ template "/etc/nova/api-paste.ini" do
 
 end
 
-execute "sudo ufw allow from 10.0.100.0/24 to any port 8774"
+execute "sudo ufw allow 8774"
 
