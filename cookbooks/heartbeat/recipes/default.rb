@@ -36,4 +36,18 @@ service "heartbeat" do
   action :enable
 end
 
-  
+template "/etc/ha.d/ha.cf" do
+  source "ha.cf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+end
+
+template "/etc/ha.d/haresources" do
+  source "haresources.erb"
+  owner "root"
+  group "root"
+  mode 0644
+end
+
+
