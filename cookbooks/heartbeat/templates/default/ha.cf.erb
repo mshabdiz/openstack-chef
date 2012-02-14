@@ -1,0 +1,11 @@
+logfacility     local0
+keepalive 2
+deadtime 30
+warntime 10
+debugfile /var/log/ha-debug
+initdead 120
+ucast  <%= @node[:heartheat][:ucast] %>
+<% @node[:heartbeat][:nodes].each do |name| %>
+node  <%= name %>
+<% end %>
+
