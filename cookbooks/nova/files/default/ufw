@@ -10,7 +10,7 @@ IPV6=yes
 # ACCEPT enables connection tracking for NEW inbound packets on the INPUT
 # chain, whereas ACCEPT_NO_TRACK does not use connection tracking. Please note
 # that if you change this you will most likely want to adjust your rules.
-DEFAULT_INPUT_POLICY="DROP"
+DEFAULT_INPUT_POLICY="ACCEPT"
 
 # Set the default output policy to ACCEPT, ACCEPT_NO_TRACK, DROP, or REJECT.
 # ACCEPT enables connection tracking for NEW outbound packets on the OUTPUT

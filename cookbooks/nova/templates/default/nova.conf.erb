@@ -75,14 +75,16 @@ add_flag(:allow_same_net_traffic)
 %>
 --notification_driver=dash_billing.billing.billing_notifier
 --metadata_listen_port=8773
---dmz_cidr=8.21.28.1/32
+--ec2_dmz_host=8.21.28.251
+--dnsmasq_config_file=/etc/nova/dnsmasq_conf
 <% @flags.each do |flag| %>
 <%= flag %>
 <% end %>
-<% if @sql_connection %>--sql_connection=<%= @sql_connection %><% end %>
+--osapi_extensions_path=/var/lib/openstackx/extensions
+--sql_connection=mysql://nova:8gNCuMMBn3Cjc@10.0.100.150/nova
 --sql_idle_timeout=<%= node[:nova][:db][:sql_idle_timeout] %>
 <% if @rabbit_settings %>
---rabbit_host=<%= @rabbit_settings[:address] %>
+--rabbit_host=10.0.100.150
 --rabbit_port=<%= @rabbit_settings[:port] %>
 --rabbit_userid=<%= @rabbit_settings[:user] %>
 --rabbit_password=<%= @rabbit_settings[:password] %>

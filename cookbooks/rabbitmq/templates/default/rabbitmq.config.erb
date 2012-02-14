@@ -3,7 +3,7 @@
 ###
 
 NODENAME=<%= @node[:rabbitmq][:nodename] %>
-NODE_IP_ADDRESS=<%= @node[:rabbitmq][:address] %>
+NODE_IP_ADDRESS=0.0.0.0
 NODE_PORT=<%= @node[:rabbitmq][:port] %>
 SERVER_ERL_ARGS=<%= @node[:rabbitmq][:erl_args] %>
 CLUSTER_CONFIG_FILE=<%= @node[:rabbitmq][:cluster_config] %>

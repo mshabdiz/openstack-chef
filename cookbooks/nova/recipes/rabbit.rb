@@ -20,7 +20,7 @@
 
 node[:rabbitmq][:address] = node[:nova][:my_ip]
 
-include_recipe "rabbitmq"
+include_recipe "rabbitmq::cluster"
 
 # add a vhost to the queue
 execute "rabbitmqctl add_vhost #{node[:nova][:rabbit][:vhost]}" do

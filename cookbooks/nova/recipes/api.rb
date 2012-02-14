@@ -19,6 +19,12 @@
 
 include_recipe "nova::common"
 
+git "/var/lib/openstackx" do
+    repository "https://github.com/cloudbuilders/openstackx.git"
+    reference "diablo"
+    action :sync
+end
+
 #FIXME: This should come out if/when we require python-keystone in api package
 if node[:nova][:auth_type] and node[:nova][:auth_type] == "keystone" then
   package "python-keystone"

@@ -29,6 +29,10 @@ execute "sysctl -p" do
   action :nothing
 end
 
+cookbook_file "/etc/nova/dnsmasq_conf" do
+    source "dnsmasq_conf"
+end
+
 template "/etc/sysctl.conf" do
   source "sysctl.conf.erb"
   owner "root"

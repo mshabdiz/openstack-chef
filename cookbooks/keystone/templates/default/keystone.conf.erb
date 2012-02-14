@@ -23,9 +23,9 @@ backends = keystone.backends.sqlalchemy
 # Dictionary Maps every service to a header.Missing services would get header
 # X_(SERVICE_NAME) Key => Service Name, Value => Header Name
 service-header-mappings = {
-	'nova' : 'X-Server-Management-Url',
-	'swift' : 'X-Storage-Url',
-	'cdn' : 'X-CDN-Management-Url'}
+  'nova' : 'X-Server-Management-Url',
+  'swift' : 'X-Storage-Url',
+  'cdn' : 'X-CDN-Management-Url'}
 
 # Address to bind the API server
 # TODO Properties defined within app not available via pipeline.
@@ -50,7 +50,7 @@ keystone-service-admin-role = <%= node[:keystone][:service_admin_role] %>
 # SQLAlchemy connection string for the reference implementation registry
 # server. Any valid SQLAlchemy connection string is fine.
 # See: http://bit.ly/ideIpI
-sql_connection = <%= node[:keystone][:sql_connection] %>
+sql_connection = mysql://keystone:8gNCuMMBn3Cjc@10.0.100.150/keystone
 backend_entities = ['UserRoleAssociation', 'Endpoints', 'Role', 'Tenant',
                     'User', 'Credentials', 'EndpointTemplates', 'Token',
                     'Service']
@@ -61,12 +61,12 @@ sql_idle_timeout = <%= node[:keystone][:sql_idle_timeout] %>
 
 [pipeline:admin]
 pipeline =
-	urlrewritefilter
-	admin_api
+  urlrewritefilter
+  admin_api
 
 [pipeline:keystone-legacy-auth]
 pipeline =
-	urlrewritefilter
+  urlrewritefilter
     legacy_auth
     RAX-KEY-extension
     service_api
