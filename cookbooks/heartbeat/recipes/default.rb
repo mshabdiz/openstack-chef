@@ -40,6 +40,7 @@ template "/etc/ha.d/ha.cf" do
   source "ha.cf.erb"
   owner "root"
   group "root"
+  variables :node_list => node[:heartbeat][:nodes]
   mode 0644
 end
 
@@ -50,4 +51,12 @@ template "/etc/ha.d/haresources" do
   mode 0644
 end
 
+template "/etc/ha.d/authkeys" do
+  source "authkeys.erb"
+  owner "root"
+  group "root"
+  mode 0400
+end
+
+execute "sudo ufw allow from 10.0.100.0/24"
 

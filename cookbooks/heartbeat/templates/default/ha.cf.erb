@@ -4,8 +4,8 @@ deadtime 30
 warntime 10
 debugfile /var/log/ha-debug
 initdead 120
-ucast  <%= @node[:heartheat][:ucast] %>
-<% @node[:heartbeat][:nodes].each do |name| %>
+ucast  <%= node[:heartbeat][:ucast] %>
+<% @node_list.each{ |name| -%>
 node  <%= name %>
-<% end %>
+<% }  -%>
 
