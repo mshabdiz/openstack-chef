@@ -1,0 +1,23 @@
+<VirtualHost *:80>
+WSGIScriptAlias / /var/lib/dash/openstack-dashboard/dashboard/wsgi/django.wsgi
+WSGIDaemonProcess horizon user=dash group=dash processes=3 threads=10
+SetEnv APACHE_RUN_USER dash
+SetEnv APACHE_RUN_GROUP dash
+WSGIProcessGroup horizon
+
+DocumentRoot /var/lib/dash/.blackhole/
+Alias /media /var/lib/dash/openstack-dashboard/media
+#Alias /vpn /opt/stack/vpn
+
+<Directory /var/lib/dash >
+Options Indexes FollowSymLinks MultiViews
+AllowOverride None
+Order allow,deny
+allow from all
+</Directory>
+
+ErrorLog /var/log/apache2/error.log
+LogLevel warn
+CustomLog /var/log/apache2/access.log combined
+</VirtualHost>
+

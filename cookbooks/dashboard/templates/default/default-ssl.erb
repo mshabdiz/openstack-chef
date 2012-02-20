@@ -1,0 +1,153 @@
+<IfModule mod_ssl.c>
+<VirtualHost trystack.org:443>
+  ServerName trystack.org
+  ServerAdmin trystack@openstack.org
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  # Possible values include: debug, info, notice, warn, error, crit,
+  # alert, emerg.
+  LogLevel warn
+
+  DocumentRoot /var/www/html
+  <Directory />
+  Options FollowSymLinks
+  AllowOverride None
+  </Directory>
+  <Directory /var/www/html>
+  Options Indexes FollowSymLinks MultiViews
+  AllowOverride None
+  Order allow,deny
+  allow from all
+  </Directory>
+
+  CustomLog ${APACHE_LOG_DIR}/ssl_access.log combined
+  SSLEngine on
+  SSLCertificateFile    /opt/stack/ssl_key/trystack.crt
+  SSLCertificateKeyFile  /opt/stack/ssl_key/trystack.nopass.pem
+  SSLProxyEngine on
+  ProxyPass /static http://trystack.org/static
+  ProxyPassReverse /static http://trystack.org/static
+  ProxyPass /dash http://trystack.org/dash
+  ProxyPassReverse /dash http://trystack.org/dash
+  ProxyPass /syspanel http://trystack.org/syspanel
+  ProxyPassReverse /syspanel http://trystack.org/syspanel
+  ProxyPass /auth http://trystack.org/auth
+  ProxyPassReverse /auth http://trystack.org/auth
+  ProxyRequests Off
+  ProxyPreserveHost On
+
+  BrowserMatch "MSIE [2-6]" \
+    nokeepalive ssl-unclean-shutdown \
+    downgrade-1.0 force-response-1.0
+  # MSIE 7 and newer should be able to use keepalive
+  BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+
+</VirtualHost>
+
+NameVirtualHost *:9773
+Listen 9773
+<VirtualHost nova-api.trystack.org:9773>
+ServerName nova-api.trystack.org
+ServerAdmin trystack@openstack.org
+ErrorLog ${APACHE_LOG_DIR}/error.log
+# Possible values include: debug, info, notice, warn, error, crit,
+# alert, emerg.
+LogLevel warn
+
+CustomLog ${APACHE_LOG_DIR}/ssl_access.log combined
+SSLEngine on
+SSLCertificateFile    /opt/stack/ssl_key/nova-api.trystack.crt
+SSLCertificateKeyFile  /opt/stack/ssl_key/trystack.nopass.pem
+SSLProxyEngine on
+ProxyPass / http://nova-api.trystack.org:8773/
+ProxyPassReverse / http://nova-api.trystack.org:8773/
+
+AddOutputFilterByType SUBSTITUTE application/json
+Substitute s/nova-api.thefreecloud.org:8774/nova-api.trystack.org:9774/n
+Substitute s/nova-api.thefreecloud.org:8773/nova-api.trystack.org:9773/n
+Substitute s/keystone.thefreecloud.org:5001/nova-api.trystack.org:5443/n
+Substitute s/glance.thefreecloud.org:9292/GLANCE_API_IS_NOT_DISCLOSED/n
+Substitute s/http/https/n
+ProxyRequests Off
+ProxyPreserveHost On
+
+BrowserMatch "MSIE [2-6]" \
+  nokeepalive ssl-unclean-shutdown \
+  downgrade-1.0 force-response-1.0
+# MSIE 7 and newer should be able to use keepalive
+BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+
+</VirtualHost>
+
+NameVirtualHost *:9774
+Listen 9774
+<VirtualHost nova-api.trystack.org:9774>
+ServerName nova-api.trystack.org
+ServerAdmin trystack@openstack.org
+ErrorLog ${APACHE_LOG_DIR}/error.log
+# Possible values include: debug, info, notice, warn, error, crit,
+# alert, emerg.
+LogLevel warn
+
+CustomLog ${APACHE_LOG_DIR}/ssl_access.log combined
+SSLEngine on
+SSLCertificateFile    /opt/stack/ssl_key/nova-api.trystack.crt
+SSLCertificateKeyFile  /opt/stack/ssl_key/trystack.nopass.pem
+SSLProxyEngine on
+ProxyPass / http://nova-api.trystack.org:8774/
+ProxyPassReverse / http://nova-api.trystack.org:8774/
+
+AddOutputFilterByType SUBSTITUTE application/json
+Substitute s/nova-api.thefreecloud.org:8774/nova-api.trystack.org:9774/n
+Substitute s/nova-api.thefreecloud.org:8773/nova-api.trystack.org:9773/n
+Substitute s/keystone.thefreecloud.org:5001/nova-api.trystack.org:5443/n
+Substitute s/glance.thefreecloud.org:9292/GLANCE_API_IS_NOT_DISCLOSED/n
+Substitute s/http/https/n
+ProxyRequests Off
+ProxyPreserveHost On
+
+BrowserMatch "MSIE [2-6]" \
+  nokeepalive ssl-unclean-shutdown \
+  downgrade-1.0 force-response-1.0
+# MSIE 7 and newer should be able to use keepalive
+BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+
+</VirtualHost>
+
+NameVirtualHost *:5443
+Listen 5443
+<VirtualHost nova-api.trystack.org:5443>
+ServerName nova-api.trystack.org
+ServerAdmin trystack@openstack.org
+ErrorLog ${APACHE_LOG_DIR}/error.log
+# Possible values include: debug, info, notice, warn, error, crit,
+# alert, emerg.
+LogLevel warn
+
+CustomLog ${APACHE_LOG_DIR}/ssl_access.log combined
+SSLEngine on
+SSLCertificateFile    /opt/stack/ssl_key/nova-api.trystack.crt
+SSLCertificateKeyFile  /opt/stack/ssl_key/trystack.nopass.pem
+SSLProxyEngine on
+ProxyPass / http://trystack.org:5000/
+ProxyPassReverse / http://trystack.org:5000/
+
+AddOutputFilterByType SUBSTITUTE application/json
+Substitute s/nova-api.thefreecloud.org:8774/nova-api.trystack.org:9774/n
+Substitute s/nova-api.thefreecloud.org:8773/nova-api.trystack.org:9773/n
+Substitute s/keystone.thefreecloud.org:5001/nova-api.trystack.org:5443/n
+Substitute s/glance.thefreecloud.org:9292/GLANCE_API_IS_NOT_DISCLOSED/n
+Substitute s/http/https/n
+ProxyRequests Off
+ProxyPreserveHost On
+
+BrowserMatch "MSIE [2-6]" \
+  nokeepalive ssl-unclean-shutdown \
+  downgrade-1.0 force-response-1.0
+# MSIE 7 and newer should be able to use keepalive
+BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
+
+</VirtualHost>
+
+
+
+</IfModule>
