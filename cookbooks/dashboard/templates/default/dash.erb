@@ -3,6 +3,7 @@ WSGIScriptAlias / /var/lib/dash/openstack-dashboard/dashboard/wsgi/django.wsgi
 WSGIDaemonProcess horizon user=dash group=dash processes=3 threads=10
 SetEnv APACHE_RUN_USER dash
 SetEnv APACHE_RUN_GROUP dash
+SetEnv HTTPS on
 WSGIProcessGroup horizon
 
 DocumentRoot /var/lib/dash/.blackhole/

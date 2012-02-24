@@ -30,13 +30,22 @@ INSTALLED_APPS = (
     'django_openstack.templatetags',
     'dash_billing.syspanel',
     'dash_billing.dash',
-)
+    'social_auth'
+    )
 
 
 # Send email to the console by default
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Or send them to /dev/null
 #EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
+FACEBOOK_APP_ID = '<%= @facebook_app_id %>'
+FACEBOOK_API_SECRET = '<%= @facebook_api_secret %>'
+LOGIN_REDIRECT_URL = '/dash'
+
+NOVA_USERNAME = '<%= @nova_username %>'
+NOVA_PASSWORD = '<%= @nova_password %>'
+ADMIN_TENANT = '<%= @nova_tenant %>'
 
 # django-mailer uses a different settings attribute
 MAILER_EMAIL_BACKEND = EMAIL_BACKEND

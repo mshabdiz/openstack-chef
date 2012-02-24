@@ -1,6 +1,3 @@
-execute "sudo invoke-rc.d apparmor stop"
-execute "sudo update-rc.d -f apparmor remove"
-
 package "apparmor" do
     action :remove
 end
@@ -12,12 +9,9 @@ cookbook_file "/etc/apt/sources.list" do
     mode 0644
 end
 
-execute "rm -rf /var/log;" do
-    only_if "test -d /var/log"
+execute "sudo dd if=/dev/zero of=/opt/openstack/swap bs=1G count=50;sudo mkswap /opt/openstack/swap;sudo swapon /opt/openstack/swap" do
+    not_if "swapon -s | grep /opt/openstack/swap"
 end
-
-execute "ln -s /opt/openstack/log/ /var/log;"
-
 
 execute "sudo add-apt-repository ppa:openstack-release/2011.3"
 execute "sudo ifconfig eth1 up"
@@ -32,6 +26,8 @@ execute "apt-get update" do
 end
 
 execute "sudo ntpdate-debian"
+
+package "python-setuptools"
 
 package "git"
 

@@ -48,6 +48,8 @@ if node[:nova][:network_manager] == "nova.network.manager.FlatManager" and node[
   end
 end
 
+execute "sudo yes| ufw enable"
+
 cookbook_file "/etc/default/ufw" do
     source "ufw"
 end

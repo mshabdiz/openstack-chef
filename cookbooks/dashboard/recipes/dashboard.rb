@@ -216,7 +216,12 @@ template "/var/lib/dash/openstack-dashboard/local/local_settings.py" do
     :db_host =>   node[:dash][:db_host],
     :db_name =>   node[:dash][:db_name],
     :service_port =>   node[:dash][:keystone_service_port],
-    :admin_token =>   node[:dash][:keystone_admin_token]
+    :admin_token =>   node[:dash][:keystone_admin_token],
+    :nova_username => node[:dash][:nova_username],
+    :nova_password => node[:dash][:nova_password],
+    :nova_tenant => node[:dash][:nova_tenant],
+    :facebook_app_id => node[:dash][:facebook_app_id],
+    :facebook_api_secret => node[:dash][:facebook_api_secret]
   )
 end
 
