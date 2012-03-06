@@ -68,7 +68,7 @@ ProxyPassReverse / http://nova-api.trystack.org:8773/
 AddOutputFilterByType SUBSTITUTE application/json
 Substitute s/nova-api.thefreecloud.org:8774/nova-api.trystack.org:9774/n
 Substitute s/nova-api.thefreecloud.org:8773/nova-api.trystack.org:9773/n
-Substitute s/keystone.thefreecloud.org:5001/nova-api.trystack.org:5443/n
+Substitute s/keystone.thefreecloud.org:5000/nova-api.trystack.org:5443/n
 Substitute s/glance.thefreecloud.org:9292/GLANCE_API_IS_NOT_DISCLOSED/n
 Substitute s/http/https/n
 ProxyRequests Off
@@ -103,7 +103,7 @@ ProxyPassReverse / http://nova-api.trystack.org:8774/
 AddOutputFilterByType SUBSTITUTE application/json
 Substitute s/nova-api.thefreecloud.org:8774/nova-api.trystack.org:9774/n
 Substitute s/nova-api.thefreecloud.org:8773/nova-api.trystack.org:9773/n
-Substitute s/keystone.thefreecloud.org:5001/nova-api.trystack.org:5443/n
+Substitute s/keystone.thefreecloud.org:5000/nova-api.trystack.org:5443/n
 Substitute s/glance.thefreecloud.org:9292/GLANCE_API_IS_NOT_DISCLOSED/n
 Substitute s/http/https/n
 ProxyRequests Off
@@ -138,7 +138,7 @@ ProxyPassReverse / http://trystack.org:5000/
 AddOutputFilterByType SUBSTITUTE application/json
 Substitute s/nova-api.thefreecloud.org:8774/nova-api.trystack.org:9774/n
 Substitute s/nova-api.thefreecloud.org:8773/nova-api.trystack.org:9773/n
-Substitute s/keystone.thefreecloud.org:5001/nova-api.trystack.org:5443/n
+Substitute s/keystone.thefreecloud.org:5000/nova-api.trystack.org:5443/n
 Substitute s/glance.thefreecloud.org:9292/GLANCE_API_IS_NOT_DISCLOSED/n
 Substitute s/http/https/n
 ProxyRequests Off
