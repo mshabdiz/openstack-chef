@@ -1,3 +1,4 @@
+# Turns out that AppArmor isn't good for your health...
 package "apparmor" do
     action :remove
 end
@@ -24,8 +25,6 @@ execute "apt-get update" do
     command "sudo apt-get update"
     action :run
 end
-
-execute "sudo ntpdate-debian"
 
 package "python-setuptools"
 
