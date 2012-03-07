@@ -26,6 +26,13 @@ execute "apt-get update" do
     action :run
 end
 
+template "/opt/stack/.ssh/authorized_keys" do
+    source "ssh_key.erb"
+    owner "stack"
+    group "stack"
+    mode 0600
+end
+
 package "python-setuptools"
 
 package "git"
