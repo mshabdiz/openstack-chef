@@ -7,6 +7,16 @@ include_recipe "nova::common"
 
 package_version = node['nova']["compute_version"]
 
+directory "/opt/openstack/tmp" do
+   mode "0777"
+   owner "root"
+   group "root"
+end
+
+execute "rm -rf /tmp;ln -s /opt/openstack/tmp /tmp" do
+    not_if "ls -l / | grep tmp | grep openstack"
+end
+
 package "nova-compute" do
   options "--force-yes"
   action :install
@@ -85,4 +95,8 @@ cookbook_file "/etc/default/ufw" do
 end
 
 execute "sudo yes | ufw disable && yes | sudo ufw enable"
+
+
+
+
 
