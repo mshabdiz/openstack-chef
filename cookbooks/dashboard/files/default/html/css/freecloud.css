@@ -116,10 +116,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6dae5', end
 
 .masthead p.description {
   padding: 20px;
+  padding-top: 0px;
   font-size: 18px;
   line-height: 1.5em;
   text-shadow: #DDFFFD 0px 1px 1px;
   color: black;
+}
+
+.freecloud-intro img {
+  margin-top: -10px;
 }
 
 .masthead p.description a, .masthead p.description a:visited, .masthead p.description a:hover {
@@ -333,6 +338,7 @@ p.openstack {
 
 .logos {
   text-align: center;
+  margin-bottom: 30px;
 }
 
 /* Footer
@@ -648,6 +654,25 @@ form.well {
 .bootstrap-examples .thumbnail {
   margin-bottom: 9px;
   background-color: #fff;
+}
+
+table.dashboards {
+    border-top: 1px solid #C9C9C9;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+table.dashboards tr {
+  border-bottom: 1px solid #C9C9C9;
+}
+
+table.dashboards td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+table.dashboards td:last-child {
+  text-align: right;
 }
 
 

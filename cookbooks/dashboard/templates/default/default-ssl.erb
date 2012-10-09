@@ -36,8 +36,10 @@
   ProxyPassReverse /login http://trystack.org/login
   ProxyPass /complete http://trystack.org/complete
   ProxyPassReverse /complete http://trystack.org/complete
+
+  ProxyPass /essex http://10.0.100.102/essex
+  ProxyPassReverse /essex http://10.0.100.102/essex
   ProxyRequests Off
-  ProxyPreserveHost On
 
   BrowserMatch "MSIE [2-6]" \
     nokeepalive ssl-unclean-shutdown \
